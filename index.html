@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>QR Dinâmico</title>
+</head>
+<body>
+  <h1>Editar URL do QR Code</h1>
+  <input type="text" id="novaUrl" placeholder="Nova URL de destino" size="50">
+  <button onclick="atualizar()">Atualizar</button>
+  <p id="status"></p>
+
+  <script>
+    async function atualizar() {
+      const novaUrl = document.getElementById('novaUrl').value;
+      const resposta = await fetch('https://qr-backend.onrender.com/editar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: novaUrl })
+      });
+      const texto = await resposta.text();
+      document.getElementById('status').innerText = texto;
+    }
+  </script>
+</body>
+</html>
