@@ -1,24 +1,30 @@
-// index.js
 const express = require('express');
 const app = express();
+const cors = require('cors');
 
 let destinoAtual = 'https://google.com'; // URL inicial
 
-app.get('/meu-qrcode', (req, res) => {
+app.use(cors());
+app.use(express.json());
+
+app.get('/', (req, res) => {
+  res.send('Servidor de QR Code Dinâmico rodando!');
+});
+
+app.get('/qrcode', (req, res) => {
   res.redirect(destinoAtual);
 });
 
-app.use(express.json());
-app.post('/atualizar', (req, res) => {
+app.post('/editar', (req, res) => {
   const novaUrl = req.body.url;
-  if (novaUrl) {
-    destinoAtual = novaUrl;
-    res.send(`URL atualizada para: ${novaUrl}`);
-  } else {
-    res.status(400).send('URL inválida');
+  if (!novaUrl || !novaUrl.startsWith('http')) {
+    return res.status(400).send('URL inválida');
   }
+  destinoAtual = novaUrl;
+  res.send(`✅ URL atualizada para: ${novaUrl}`);
 });
 
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log('Servidor rodando na porta ' + PORT);
 });
