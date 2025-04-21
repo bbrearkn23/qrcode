@@ -44,7 +44,7 @@
   <img id="qrcode" alt="QR Code" />
 
   <script>
-    // URL do back-end que vai gerar o redirecionamento
+    // URL do back-end (o QR Code vai gerar um link para essa URL)
     const BACKEND_URL = 'https://porteiro2.onrender.com';
 
     // Função para atualizar a URL de destino
@@ -59,9 +59,9 @@
       document.getElementById('status').innerText = texto;
     }
 
-    // Gera o QR Code com o endereço correto
+    // Gera o QR Code com a URL correta (sem o /qrcode)
     document.getElementById('qrcode').src =
-      `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(BACKEND_URL + '/qrcode')}`;
+      `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(BACKEND_URL)}`;
   </script>
 
 </body>
