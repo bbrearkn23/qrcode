@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>QR Code Dinâmico</title>
+  <title>Painel QR Dinâmico</title>
   <style>
     body {
       font-family: sans-serif;
@@ -12,28 +12,29 @@
     }
     input {
       width: 80%;
-      padding: 8px;
+      padding: 10px;
       margin-bottom: 10px;
     }
     button {
       padding: 10px 20px;
       font-size: 16px;
+      cursor: pointer;
     }
     #status {
       margin-top: 10px;
       color: green;
     }
     img {
-      margin-top: 20px;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
 
   <h1>QR Code Dinâmico</h1>
+  <p>Atualize o destino do QR Code:</p>
 
-  <p>Atualize o destino do QR Code abaixo:</p>
-  <input type="text" id="novaUrl" placeholder="https://exemplo.com">
+  <input type="text" id="novaUrl" placeholder="Digite a nova URL de destino">
   <br>
   <button onclick="atualizar()">Atualizar</button>
 
@@ -43,24 +44,22 @@
   <img id="qrcode" alt="QR Code" />
 
   <script>
-    const BACKEND_URL = 'https://qr-backend.onrender.com'; // Substitua pelo seu endereço no Render
+    const BACKEND_URL = 'https://porteiro2.onrender.com';
 
     async function atualizar() {
       const novaUrl = document.getElementById('novaUrl').value;
-
       const resposta = await fetch(`${BACKEND_URL}/editar`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: novaUrl })
       });
-
       const texto = await resposta.text();
       document.getElementById('status').innerText = texto;
     }
 
-    // Gera o QR Code com a URL fixa
+    // Mostra o QR Code na tela
     document.getElementById('qrcode').src =
-      `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(BACKEND_URL + '/qrcode')}`;
+      `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(BACKEND_URL + '/qrcode')}`;
   </script>
 
 </body>
