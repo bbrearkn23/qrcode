@@ -2,67 +2,22 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>Painel QR Dinâmico</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      max-width: 600px;
-      margin: 40px auto;
-      text-align: center;
-    }
-    input {
-      width: 80%;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    #status {
-      margin-top: 10px;
-      color: green;
-    }
-    img {
-      margin-top: 30px;
-    }
-  </style>
+  <title>QR Codes Dinâmicos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>QR Code Dinâmico</h1>
-  <p>Atualize o destino do QR Code:</p>
+  <h1>QR Codes Dinâmicos</h1>
+  <p>Selecione o site para gerar o QR Code:</p>
 
-  <input type="text" id="novaUrl" placeholder="Digite a nova URL de destino">
-  <br>
-  <button onclick="atualizar()">Atualizar</button>
+  <select id="siteSelector">
+    <option value="">Escolha um site</option>
+  </select>
 
-  <p id="status"></p>
+  <button onclick="gerarQRCode()">Gerar QR Code</button>
 
-  <h2>QR Code:</h2>
-  <img id="qrcode" alt="QR Code" />
+  <div id="qrCodes"></div>
 
-  <script>
-    // URL do back-end (o QR Code vai gerar um link para essa URL)
-    const BACKEND_URL = 'https://porteiro2.onrender.com';
-
-    // Função para atualizar a URL de destino
-    async function atualizar() {
-      const novaUrl = document.getElementById('novaUrl').value;
-      const resposta = await fetch(`${BACKEND_URL}/editar`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: novaUrl })
-      });
-      const texto = await resposta.text();
-      document.getElementById('status').innerText = texto;
-    }
-
-    // Gera o QR Code com a URL correta (sem o /qrcode)
-    document.getElementById('qrcode').src =
-      `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(BACKEND_URL)}`;
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
